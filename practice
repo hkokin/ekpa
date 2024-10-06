@@ -1,0 +1,22 @@
+import pandas as pd
+from sklearn.ensemble import IsolationForest
+
+# Load the dataset
+data = pd.read_csv('your_dataset.csv')
+
+# Preprocess data (e.g., handle missing values, normalize)
+
+# Create Isolation Forest model
+model = IsolationForest(contamination=0.01)  # Adjust contamination parameter as needed
+
+# Fit the model to the data
+model.fit(data)
+
+# Predict anomaly scores
+scores = model.decision_function(data)
+
+# Set a threshold for anomaly detection
+threshold = -0.1  # Adjust threshold based on your data
+
+# Classify flows as normal or anomalous
+data['Label'] = (scores < threshold).astype(int)
