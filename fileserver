@@ -1,0 +1,18 @@
+ef index_folder(folder_path):
+    writer = ix.writer()
+    for root, _, files in os.walk(folder_path):
+        for file in files:
+            file_path = os.path.join(root, file)
+            try:
+                with open(file_path, "r", encoding="utf-8", errors="ignore") as f:
+                    content = f.read()
+            except:
+                content = ""
+
+            writer.add_document(
+                path=file_path,
+                name=file,
+                content=content,
+                modified=datetime.fromtimestamp(os.path.getmtime(file_path))
+            )
+    writer.commit()
